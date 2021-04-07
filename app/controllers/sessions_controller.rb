@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     respond_to do |format|
       if user && user.authenticate(params[:session][:password])
         session[:user_id] = user.id
-        format.html { redirect_to user, notice: "Logged in successfully" }
+        format.html { redirect_to articles_path, notice: "Logged in successfully" }
         format.json { render :show, status: :created, location: login_path }
       else
         format.html { redirect_to login_path,  notice: "Log in failed" }

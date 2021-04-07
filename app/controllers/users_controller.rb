@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
-  before_action :require_user, only: %i[ edit update ]
-  before_action :require_same_user, only: %i[ edit update ]
+  before_action :require_user, only: %i[ edit update delete ]
+  before_action :require_same_user, only: %i[ edit update delete ]
 
   # GET /users or /users.json
   def index
@@ -49,7 +49,14 @@ class UsersController < ApplicationController
     end
   end
 
-
+  def destroy
+    @user.destroy
+    session[:user_id] = nil
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: "Account deleted" }
+      format.json { head :no_content }
+    end
+  end
 
   private
   # Use callbacks to share common setup or constraints between actions.
