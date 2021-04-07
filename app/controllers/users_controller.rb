@@ -51,7 +51,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    session[:user_id] = nil
+    session[:user_id] = nil if @user == current_user
     respond_to do |format|
       format.html { redirect_to root_path, notice: "Account deleted" }
       format.json { head :no_content }
@@ -74,7 +74,7 @@ class UsersController < ApplicationController
     if @user != current_user
       respond_to do |format|
         format.html { redirect_to @user, notice: "You must own this account to do this." }
-        format.json { render json: ["You must own this account to do this."], status: :unauthorized }
+        format.json { render json: ["You must own this account to do this."], status: 401 }
       end
     end
   end
