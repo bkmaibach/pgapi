@@ -74,7 +74,7 @@ class ArticlesController < ApplicationController
       if @article.user != current_user
         respond_to do |format|
           format.html { redirect_to @article, notice: "You must own this article to do this." }
-          format.json { render json: ["You must own this article to do this."], status: :unauthorized }
+          format.json { render json: ["You must own this article to do this."], status: 401 }
         end
       end
     end
