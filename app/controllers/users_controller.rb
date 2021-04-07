@@ -1,5 +1,12 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :require_user, only: %i[ edit update ]
+  before_action :require_same_user, only: %i[ edit update ]
+
+  # GET /users or /users.json
+  def index
+    @users = User.all
+  end
 
   # GET /users/1 or /users/1.json
   def show
@@ -19,6 +26,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
+        session[:user_id] = @user.id
         format.html { redirect_to articles_path, notice: "Signup was successful!" }
         format.json { render :show, status: :created, location: @user }
       else
@@ -52,5 +60,15 @@ class UsersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def user_params
     params.require(:user).permit(:username, :email, :password)
+  end
+
+  # require that the associated user is logged in
+  def require_same_user
+    if @user != current_user
+      respond_to do |format|
+        format.html { redirect_to @user, notice: "You must own this account to do this." }
+        format.json { render json: ["You must own this account to do this."], status: :unauthorized }
+      end
+    end
   end
 end
