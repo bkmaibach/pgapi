@@ -6,15 +6,13 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th colspan="1"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @categories.each do |category| %>
       <tr>
-        <td><%= category.name %></td>
-        <td><%= link_to 'Show', category %></td>
+        <td><%= link_to category, category %></td>
         <% if logged_in? %>
           <td><%#= link_to 'Edit', edit_user_path(user) %></td>
           <td><%#= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
