@@ -20,7 +20,7 @@ class CreateCategoryTest < ActionDispatch::IntegrationTest
       post categories_path, params: { category: { name: " "} }
     end
     assert_response :unprocessable_entity
-    assert_select "div#error_explanation", response.body
-    assert_match "Name can't be blank", response.body
+    assert_select "#error_explanation"
+    assert_match "Name can&#39;t be blank", response.body
   end
 end
