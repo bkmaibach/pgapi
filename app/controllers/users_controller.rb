@@ -74,7 +74,7 @@ class UsersController < ApplicationController
     if @user != current_user
       respond_to do |format|
         format.html { redirect_to @user, notice: "You must own this account to do this." }
-        format.json { render json: ["You must own this account to do this."], status: 401 }
+        format.json { render json: { errors: ["You must own this account to do this."] }, status: 403 }
       end
     end
   end

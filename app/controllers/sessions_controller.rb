@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
         format.json { render :show, status: :created, location: login_path }
       else
         format.html { redirect_to login_path,  notice: "Log in failed" }
-        format.json { render json: ["Login unsuccessful"], status: :unprocessable_entity }
+        format.json { render json: { errors: ["Login unsuccessful"] }, status: :unprocessable_entity }
       end
     end
   end
@@ -25,7 +25,7 @@ class SessionsController < ApplicationController
         format.json { render :show, status: :destroyed, location: logout_path }
       else
         format.html { redirect_to articles_path,  notice: "Log out failed" }
-        format.json { render json: ["Logout unsuccessful"], status: :unprocessable_entity }
+        format.json { render json: { errors: ["Logout unsuccessful"] }, status: :unprocessable_entity }
       end
     end
   end
