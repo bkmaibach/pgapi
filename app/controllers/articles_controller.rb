@@ -25,6 +25,7 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     @article.user = current_user
+    byebug
     respond_to do |format|
       if @article.save
         format.html { redirect_to @article, notice: "Article was successfully created." }
@@ -66,7 +67,7 @@ class ArticlesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def article_params
-      params.require(:article).permit(:title, :description)
+      params.require(:article).permit(:title, :description, category_ids: [])
     end
 
     # require that the associated user is logged in
@@ -74,7 +75,7 @@ class ArticlesController < ApplicationController
       if @article.user != current_user
         respond_to do |format|
           format.html { redirect_to @article, notice: "You must own this article to do this." }
-          format.json { render json: { errors: "You must own this article to do this."] }, status: 403 }
+          format.json { render json: { errors: ["You must own this article to do this."] }, status: 403 }
         end
       end
     end
