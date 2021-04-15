@@ -7,6 +7,6 @@
 
 <%= link_to 'Back', categories_path %>
 <% if logged_in?%>
-  <%#= link_to 'Edit', edit_user_path(@user) if logged_in? && (@user == current_user || current_user.admin?) %>
+  <%= link_to 'Edit', edit_category_path(@category) if logged_in? && (@user == current_user || current_user.admin?) %>
   <%#= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' } %>
 <% end %>
